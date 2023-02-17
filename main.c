@@ -7,6 +7,7 @@
 #include "database.h"
 #include "calculations.h"
 
+void start(void);
 
 void main(void)
 {
