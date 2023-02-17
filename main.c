@@ -4,41 +4,9 @@
 #include<unistd.h>
 #include "getch.h"
 #include "utils.h"
+#include "database.h"
+#include "calculations.h"
 
-struct date_and_time
-
-{
-    int dy,mth;
-
-};
-
-int check_class();//check class (1-12)
-
-struct student
-{
-    struct date_and_time dte_tme;
-    float fes,debt,total,advanced,duedate;
-    char names[50];
-    int ro,cl;
-} std,s;
-
-struct teacher
-{
-    struct date_and_time dte_tme;
-    char names[50];
-    float slry,advanced,total;
-    int t_id,t_no;
-} techr,temp_f;
-
-void adding_records(int);//for adding records
-void update_records(int);//for modifying records
-void searching_records(int);//for searching records
-void deleting_records(int);//for deleting records
-void salary(int);//for the calculation of salary of teacher and staff
-FILE *file_store,*file_temp;//file declaration
-
-int mm,dd;//mm=month, dd=day
-void exits();//for exiting
 
 void main(void)
 {
@@ -79,7 +47,7 @@ void main(void)
     {
         printf("\xdb");
     }
-    system("color 9b");
+  
     printf("\n\n\t** WELCOME TO STAR SCHOOL MANAGEMENT SYSTEM **\n\n\n");
 
     for(l=0; l<80; l++)
@@ -98,5 +66,114 @@ void main(void)
     printf("\n\t\tPLEASE ENTER CURRENT DATE\nmm dd\n ");
     scanf("%d%d",&mm,&dd);
     mm=checking_date(mm,dd);
-    //start();
+    start();
 }
+
+void start()
+{
+    int l,m;//j is for selection of account type
+    system("clear");
+    printf("\n\t\tPLEASE ENTER ACCOUNT TYPE");
+    printf("\n\t\t1:: Student");
+    printf("\n\t\t2:: Teachers and Staffs");
+    printf("\n\t\t3:: Exit");
+    printf("\n\t\tAccount Type Choice  ");
+    fflush(stdin);
+    scanf("%d",&m);
+    switch (m)
+    {
+    case 3:
+        exits();
+    case 1:
+    {
+        system("clear");
+        printf("\n\t\tPLEASE ENTER THE CHOICE");
+        printf("\n\t\t1:: Add Record");
+        printf("\n\t\t2:: Search Record");
+        printf("\n\t\t3:: Modify Record");
+        printf("\n\t\t4:: Delete Record");
+        printf("\n\t\t5:: Calculate Fee");
+        printf("\n\t\t6:: Exit");
+        printf("\n\n Enter Choice  ");
+        fflush(stdin);
+        scanf("%d",&l);
+        switch (l)
+        {
+        case 1:
+            adding_records(m);//function call
+            start();//function call
+        case 2:
+            searching_records(m);
+            start();
+        case 3:
+            update_records(m);
+            start();
+        case 4:
+            deleting_records(m);
+            start();
+        case 5:
+            fee(mm);
+            start();
+        case 6:
+            exits();
+        default :
+        {
+            printf("\n\n\tInvalid Entry!!");
+            printf("\n\nTo Account Type\n\n\t");
+            system("Pause");
+            start();
+        }
+        }
+    }
+    case 2:
+    {
+
+        system("clear");
+        printf("\n\t\tPLEASE ENTER THE CHOICE");
+        printf("\n\t\t1:: Add Record");
+        printf("\n\t\t2:: Search Record");
+        printf("\n\t\t3:: Modify Record");
+        printf("\n\t\t4:: Delete Record");
+        printf("\n\t\t5:: Calculate Salary");
+        printf("\n\t\t6:: Exit");
+        printf("\n\n Enter Choice  ");
+        fflush(stdin);
+        scanf("%d",&l);
+        switch (l)
+        {
+        case 1:
+            adding_records(m);
+            start();
+        case 2:
+            searching_records(m);
+            start();
+        case 3:
+            update_records(m);
+            start();
+        case 4:
+            deleting_records(m);
+        case 5:
+            salary(mm);
+            start();
+        case 6:
+            exits();
+        default :
+        {
+            printf("\n\n\tInvalid entry!!");
+            printf("\n\nTo Account Type\n\n\t");
+            system("Pause");
+            start();
+        }
+
+        }
+    }
+    default :
+    {
+        printf("\n\n\tInvalid Entry!!");
+        printf("\n\nTo Account Type\n\n\t");
+        system("Pause");
+        start();
+    }
+    }
+}
+
